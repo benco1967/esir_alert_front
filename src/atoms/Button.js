@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const ButtonStyled = styled.button`
   display: inline-block;
   overflow: hidden;
+  font-family: ${({theme}) => theme.font};
   font-size: 1rm;
   font-weight: 700;
   padding: .5rem 1rem;
@@ -34,10 +35,10 @@ const ButtonStyled = styled.button`
   
   color: var(--btn-text-color);
   background-color: var(--btn-main-color);
-  border: 2px solid var(--btn-main-color);
+  border: 1px solid var(--btn-main-color);
   &:not(.simple).outlined {
     color: var(--btn-main-color);
-    background-color: ${({theme}) => theme.simple}
+    background-color: ${({theme}) => theme.simple};
   }
   &.simple {
     border-color: var(--btn-text-color);
@@ -59,11 +60,11 @@ const ButtonStyled = styled.button`
   outline: 0;
   
   &:enabled:focus {
-    box-shadow: 1px 1px 3px rgba(50, 115, 220, .25);
+    box-shadow: 2px 2px 3px ${({theme}) => theme.focus};
   }
   
   &:enabled:hover {
-    box-shadow: 1px 1px 3px #aaa;
+    box-shadow: 2px 2px 3px ${({theme}) => theme.shadow};
   }
   
   &:enabled:active {
@@ -123,17 +124,25 @@ const ButtonStyled = styled.button`
   &.small {
     font-size: .7rem;
     padding: .3rem .6rem;
-    border-width: 1px;
   }
   &.big {
     font-size: 1.3rem;
     padding: .6rem 1.3rem;
   }
+  &.round {
+    border-radius: 1rem;
+  }
+  &.round.small {
+    border-radius: .8rem;
+  }
+  &.round.big {
+    border-radius: 1.4rem;
+  }
 }
 `;
 
 export const Button = ({
-                         small, big,
+                         round, small, big,
                          primary, secondary, warning, danger,
                          outlined,
                          disabled, skeleton, waiting,
@@ -171,6 +180,7 @@ export const Button = ({
   }
 
   const classes = Object.entries({
+    round: round,
     primary: primary && !secondary && !warning && !danger,
     secondary: !primary && secondary && !warning && !danger,
     warning: !primary && !secondary && warning && !danger,
@@ -206,6 +216,7 @@ Button.defaultProps = {
 }
 
 Button.prototype = {
+  round: PropTypes.bool,
   small: PropTypes.bool,
   big: PropTypes.bool,
   delay: PropTypes.number,
